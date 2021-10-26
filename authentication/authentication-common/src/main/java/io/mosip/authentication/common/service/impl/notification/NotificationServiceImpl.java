@@ -1,6 +1,8 @@
 package io.mosip.authentication.common.service.impl.notification;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
@@ -75,6 +77,8 @@ public class NotificationServiceImpl implements NotificationService {
 	@Autowired
 	private NotificationManager notificationManager;
 
+	private static final String UTC_DATETIME_PATTERN = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
+
 	public void sendAuthNotification(AuthRequestDTO authRequestDTO, String idvid, AuthResponseDTO authResponseDTO,
 			Map<String, List<IdentityInfoDTO>> idInfo, boolean isAuth) throws IdAuthenticationBusinessException {
 
@@ -93,7 +97,10 @@ public class NotificationServiceImpl implements NotificationService {
 //		ZonedDateTime zonedDateTime2 = ZonedDateTime.parse(authRequestDTO.getRequestTime());
 //		ZoneId zone = zonedDateTime2.getZone();
 
-		String localResTime = DateUtils.formatToISOString(DateUtils.parseUTCToLocalDateTime(resTime));
+		OffsetDateTime odt = OffsetDateTime.parse(resTime);
+		LocalDateTime localDateTime = odt.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+		String localResTime = localDateTime.format(DateTimeFormatter.ofPattern(UTC_DATETIME_PATTERN));
+
 		ZonedDateTime dateTimeReq = ZonedDateTime.parse(localResTime);
 //		ZonedDateTime dateTimeConvertedToReqZone = dateTimeReq.withZoneSameInstant(zone);
 		String changedDate = dateTimeReq.format(
