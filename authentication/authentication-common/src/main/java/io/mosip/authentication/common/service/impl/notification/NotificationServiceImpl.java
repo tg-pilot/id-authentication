@@ -303,8 +303,12 @@ public class NotificationServiceImpl implements NotificationService {
 			contentTemplate = otpContentTemaplate;
 		}
 
+		System.out.println("Content Template " + contentTemplate);
+		System.out.println("Values " + values.toString());
 		String mailSubject = applyTemplate(values, subjectTemplate);
 		String mailContent = applyTemplate(values, contentTemplate);
+		System.out.println("Mail Content " + mailContent);
+
 		notificationManager.sendEmailNotification(emailId, mailSubject, mailContent);
 	}
 
