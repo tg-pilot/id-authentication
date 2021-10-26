@@ -211,7 +211,7 @@ public class OTPManager {
 	 * @return the date and time
 	 */
 	private static Entry<String, String> getDateAndTime(String requestTime, String pattern) {
-
+		System.out.println("Entering into getDateAndTime");
 		String[] dateAndTime = new String[2];
 
 		DateTimeFormatter isoPattern = DateTimeFormatter.ofPattern(pattern);
