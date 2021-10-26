@@ -90,14 +90,15 @@ public class NotificationServiceImpl implements NotificationService {
 
 		String resTime = authResponseDTO.getResponseTime();
 
-		ZonedDateTime zonedDateTime2 = ZonedDateTime.parse(authRequestDTO.getRequestTime());
-		ZoneId zone = zonedDateTime2.getZone();
+//		ZonedDateTime zonedDateTime2 = ZonedDateTime.parse(authRequestDTO.getRequestTime());
+//		ZoneId zone = zonedDateTime2.getZone();
 
-		ZonedDateTime dateTimeReq = ZonedDateTime.parse(resTime);
-		ZonedDateTime dateTimeConvertedToReqZone = dateTimeReq.withZoneSameInstant(zone);
-		String changedDate = dateTimeConvertedToReqZone.format(
+		String localResTime = DateUtils.formatToISOString(DateUtils.parseUTCToLocalDateTime(resTime));
+		ZonedDateTime dateTimeReq = ZonedDateTime.parse(localResTime);
+//		ZonedDateTime dateTimeConvertedToReqZone = dateTimeReq.withZoneSameInstant(zone);
+		String changedDate = dateTimeReq.format(
 				DateTimeFormatter.ofPattern(env.getProperty(IdAuthConfigKeyConstants.NOTIFICATION_DATE_FORMAT)));
-		String changedTime = dateTimeConvertedToReqZone.format(
+		String changedTime = dateTimeReq.format(
 				DateTimeFormatter.ofPattern(env.getProperty(IdAuthConfigKeyConstants.NOTIFICATION_TIME_FORMAT)));
 
 		values.put(DATE, changedDate);
