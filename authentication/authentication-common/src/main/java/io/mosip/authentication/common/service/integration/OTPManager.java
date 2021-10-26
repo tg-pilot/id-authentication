@@ -225,7 +225,8 @@ public class OTPManager {
 		dateAndTime[0] = date;
 		String time = zonedDateTime2.format(DateTimeFormatter.ofPattern("HH:mm:ss"));
 		dateAndTime[1] = time;
-
+		System.out.println("Date " + date);
+		System.out.println("Time " + time);
 		return new SimpleEntry<>(date, time);
 
 	}
