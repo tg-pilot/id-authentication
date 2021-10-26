@@ -211,7 +211,6 @@ public class OTPManager {
 	 * @return the date and time
 	 */
 	private static Entry<String, String> getDateAndTime(String requestTime, String pattern) {
-		System.out.println("Entering into getDateAndTime");
 		String[] dateAndTime = new String[2];
 
 		DateTimeFormatter isoPattern = DateTimeFormatter.ofPattern(pattern);
@@ -225,8 +224,6 @@ public class OTPManager {
 		dateAndTime[0] = date;
 		String time = zonedDateTime2.format(DateTimeFormatter.ofPattern("HH:mm:ss"));
 		dateAndTime[1] = time;
-		System.out.println("Date " + date);
-		System.out.println("Time " + time);
 		return new SimpleEntry<>(date, time);
 
 	}
